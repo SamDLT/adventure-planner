@@ -9,5 +9,5 @@ Uses React and firebase. Firebase keys are not commited. To run this application
     "databaseURL": "DATABASE-URL",
     "storageBucket": "STORAGE-BUCKET",
     "messagingSenderId": "SENDER-ID"
-  };
+};
 ```
