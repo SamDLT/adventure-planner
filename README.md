@@ -1,3 +1,13 @@
-Side project for use by myself, friends and people who stumble upon this to organize adventures.
+Side project for use by myself, friends and people who we meet to organize adventures.
 
-Uses React and firebase. Firebase keys are hidden but it should be an easy modification as the keys are read from a static json file at the root called firebase_config.json.
+Uses React and firebase. Firebase keys are not commited. To run this application, create a firebase_config.json file at the root of the application that contains firebase configuration:
+
+```json
+{
+    "apiKey": "API-KEY",
+    "authDomain": "AUTH-DOMAIN",
+    "databaseURL": "DATABASE-URL",
+    "storageBucket": "STORAGE-BUCKET",
+    "messagingSenderId": "SENDER-ID"
+}
+```
