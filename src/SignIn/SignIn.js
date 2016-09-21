@@ -13,7 +13,8 @@ class SignIn extends Component {
         this.setState({
           ...this.state,
           isAuthenticated: this.userIsAuthenticated(),
-          user: result.user.displayName,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
           loading: false
         })
       else
@@ -43,7 +44,9 @@ class SignIn extends Component {
       <div>
       {
         this.state.isAuthenticated ?
-        <div>Logged in as {this.state.user}</div> :
+        <div>
+          <img alt="User" src={this.state.photoURL} /><div>Logged in as {this.state.displayName}</div> 
+        </div> :
         <input type="button" onClick={() => this.signIn()} value="sign in" />
       }
       </div>
