@@ -3,22 +3,19 @@ import React, { Component } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import firebaseConfig from '../../firebase_config.json';
-
 class SignIn extends Component {
 
-  constructor() {
-    super();
-    firebase.initializeApp(firebaseConfig);
-    this.state = {isAuthenticated: !!firebase.auth().currentUser, loading: true};
-  }
+  state = {isAuthenticated: getCurrentAuthStatus(), loading: true};
 
   componentDidMount() {
     firebase.auth().getRedirectResult().then((result) => {
       if(result.user) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // var token = result.credential.accessToken;
-        this.setState({...this.state, isAuthenticated: !!firebase.auth().currentUser, user: result.user.displayName, loading: false})
+        this.setState({
+          ...this.state,
+          isAuthenticated: this.getCurrentAuthStatus(),
+          user: result.user.displayName,
+          loading: false
+        })
       }
       else {
         this.setState({...this.state, loading: false});
@@ -26,6 +23,10 @@ class SignIn extends Component {
     }).catch((error) => {
       // TODO: Error handling
     });
+  }
+
+  getCurrentAuthStatus() {
+    return !!firebase.auth().currentUser;
   }
 
   signIn() {
@@ -36,15 +37,16 @@ class SignIn extends Component {
   }
 
   render() {
+
+    if(this.state.loading)
+      return <div>Loading...</div>
+
     return (
       <div>
       {
-        this.state.loading ? <div>Loading...</div> :
-        (
-          this.state.isAuthenticated ?
-          <div>Logged in as {this.state.user}</div> :
-          <input type="button" onClick={() => this.signIn()} value="sign in" />
-        )
+        this.state.isAuthenticated ?
+        <div>Logged in as {this.state.user}</div> :
+        <input type="button" onClick={() => this.signIn()} value="sign in" />
       }
       </div>
     );
