@@ -5,39 +5,37 @@ import 'firebase/auth';
 
 class SignIn extends Component {
 
-  state = {isAuthenticated: getCurrentAuthStatus(), loading: true};
+  state = {isAuthenticated: this.userIsAuthenticated(), loading: true};
 
   componentDidMount() {
     firebase.auth().getRedirectResult().then((result) => {
-      if(result.user) {
+      if(result.user)
         this.setState({
           ...this.state,
-          isAuthenticated: this.getCurrentAuthStatus(),
+          isAuthenticated: this.userIsAuthenticated(),
           user: result.user.displayName,
           loading: false
         })
-      }
-      else {
-        this.setState({...this.state, loading: false});
-      }
+      else
+        this.setState({
+          ...this.state,
+          loading: false
+        })
     }).catch((error) => {
       // TODO: Error handling
     });
   }
 
-  getCurrentAuthStatus() {
+  userIsAuthenticated() {
     return !!firebase.auth().currentUser;
   }
 
   signIn() {
-    if(!this.state.isAuthenticated) {
-      const provider = new firebase.auth.FacebookAuthProvider();
-      firebase.auth().signInWithRedirect(provider);
-    }
+    const provider = new firebase.auth.FacebookAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
   }
 
   render() {
-
     if(this.state.loading)
       return <div>Loading...</div>
 
