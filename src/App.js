@@ -9,8 +9,8 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <h2>Adventure Planner</h2>
+          <SignIn />
         </div>
-        <SignIn />
       </div>
     );
   }
